@@ -172,7 +172,11 @@ static CGFloat CHTFloorCGFloat(CGFloat value) {
 }
 
 - (id <CHTCollectionViewDelegateWaterfallLayout> )delegate {
-  return (id <CHTCollectionViewDelegateWaterfallLayout> )self.collectionView.delegate;
+  if ([self.collectionView isKindOfClass:NSClassFromString(@"ASCollectionView")]) {
+    return [self.collectionView performSelector:@selector(asyncDelegate)];
+  } else {
+    return (id <CHTCollectionViewDelegateWaterfallLayout> )self.collectionView.delegate;
+  }
 }
 
 #pragma mark - Init
